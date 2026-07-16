@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signitup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <section class="header">
+        <nav>
+            <!-- Logo linked to the index page -->
+            <a href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='Photos/Abb.png') }}" class="resize-img" alt="Logo">
+            </a>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="#help">HELP</a></li>
+                    <li><a href="#aboutus1">ABOUT</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="text-box">
+            <h1>AMERICAN SIGN LANGUAGE TRANSLATOR</h1>
+            <p>Explore the Endless Possibility of Translating Sign Language</p>
+            <!-- Link to go to the translator page -->
+            <a href="{{ url_for('frame') }}" class="hero-btn">Go to Translator</a>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ASL Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleFrame.css') }}">
+</head>
+<body>
+    <section class="header">
+        <nav>
+            <a href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='Photos/Abb.png') }}" class="resize-img" alt="Logo">
+            </a>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="#help">HELP</a></li>
+                    <li><a href="#aboutus1">ABOUT</a></li>
+                </ul>
+            </div>
+        </nav>
+    </section>
+
+    <div class="box">
+        <video id="video" autoplay playsinline muted>
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="medium-box">
+        <p id="sentence">Waiting for input...</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='scriptFrame.js') }}"></script>
+</body>
+</html>

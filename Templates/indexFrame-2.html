@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Signitup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleFrame.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/24eef90de0.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <section class="header">
+        <nav>
+            <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='Photos/Abb.png') }}" class="resize-img" alt="Logo"></a>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="{{ url_for('index') }}#help">HELP</a></li>
+                    <li><a href="{{ url_for('index') }}#aboutus1">ABOUT</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Live Camera Feed -->
+        <div class="box" id="video-container">
+            <img id="webcam" style="display:none;" alt="Webcam Feed">
+        </div>
+
+        <!-- Predicted Text Area -->
+        <div class="medium-box">
+            <p id="predicted-text">Waiting for predictions...</p>
+        </div>
+
+        <!-- Start and Stop Buttons -->
+        <div class="small-box">
+            <button class="hero-btn" onclick="startWebcam()">START</button>
+            <button class="hero-btn" onclick="stopWebcam()">STOP</button>
+        </div>
+
+        <br><br>
+    </section>
+
+    <script>
+        let webcamImg = document.getElementById('webcam');
+        let sentenceUpdater;
+        let isCameraOn = false;
+
+        function startWebcam() {
+            if (!isCameraOn) {
+                webcamImg.src = "{{ url_for('video') }}";
+                webcamImg.style.display = 'block';
+                isCameraOn = true;
+
+                // Start fetching sentences
+                sentenceUpdater = setInterval(() => {
+                    fetch('/get_sentence')
+                        .then(response => response.text())
+                        .then(data => {
+                            document.getElementById('predicted-text').innerText = data;
+                        })
+                        .catch(error => console.error('Error fetching sentence:', error));
+                }, 1000);
+            }
+        }
+
+        function stopWebcam() {
+            if (isCameraOn) {
+                webcamImg.src = '';
+                webcamImg.style.display = 'none';
+                isCameraOn = false;
+
+                // Stop fetching sentences
+                clearInterval(sentenceUpdater);
+                document.getElementById('predicted-text').innerText = "Stopped.";
+            }
+        }
+    </script>
+
+</body>
+</html>
